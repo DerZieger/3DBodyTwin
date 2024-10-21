@@ -1,0 +1,12 @@
+[submodule "external/vposercpp"]
+	path = external/vposercpp
+	url = https://github.com/DerZieger/vposercpp.git
+[submodule "external/suprcpp"]
+	path = external/suprcpp
+	url = https://github.com/DerZieger/suprcpp.git
+[submodule "external/iir1"]
+	path = external/iir1
+	url = https://github.com/berndporr/iir1.git
+[submodule "external/cppgl"]
+	path = external/cppgl
+	url = https://github.com/DerZieger/cppgl.git

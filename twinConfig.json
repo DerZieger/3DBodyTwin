@@ -1,0 +1,29 @@
+{
+    "c3dPath": "",
+    "cameraDirection": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": -1.0
+    },
+    "cameraPosition": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 3.0
+    },
+    "cmd": false,
+    "configPath": ".",
+    "defaultConstrPath": "data/default_constraints.json",
+    "frameInterval": 1,
+    "height": 1080,
+    "in": "./in",
+    "osim": {
+        "Model": "",
+        "Motion": "",
+        "Scalefactor": "",
+        "Sto": ""
+    },
+    "out": "./out",
+    "suprPath": "data/supr",
+    "width": 1920,
+    "windowTitle": "3DTwin"
+}
