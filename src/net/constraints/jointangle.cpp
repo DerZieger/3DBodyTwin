@@ -117,7 +117,7 @@ TWIN_NAMESPACE_BEGIN
         using namespace torch::indexing;
         torch::Tensor js = ca.theta.index({0, m_joints});
         torch::Tensor err = torch::where(js > m_hboundaries, torch::pow(js - m_hboundaries, 4) * 2, 0);
-        err = torch::where(js < m_lboundaries, torch::pow(js + m_lboundaries, 4) * 2, err);
+        err = torch::where(js < m_lboundaries, torch::pow(js - m_lboundaries, 4) * 2, err);
         err *= m_active;
         torch::Tensor s = torch::sum(err);
         torch::Tensor loss = m_weight.load(std::memory_order_relaxed) * s;
