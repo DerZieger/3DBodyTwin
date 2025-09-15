@@ -133,6 +133,9 @@ TWIN_NAMESPACE_BEGIN
 
         bool m_swap;
 
+    bool m_write_poses;
+    float m_last_lr;
+
         static bool c_gui;
 
         cppgl::Shader blit;

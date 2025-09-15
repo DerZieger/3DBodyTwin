@@ -11,9 +11,10 @@ TWIN_NAMESPACE_BEGIN
     bool TwinViewer::c_gui = false;
     bool TwinViewer::c_guiconf = false;
 
-    TwinViewer::TwinViewer(int argc, char *argv[]) : m_frame(0), m_prevFrame(0), m_record(false), m_recordframe(0), m_autoplay(false), m_syncplay(false), m_virtTime(0.0), m_maxFramerate(-1), m_frameadv(60), m_minFrame(std::numeric_limits<int>::max()), m_maxFrame(-1), m_dataset(DatasetType::NONE), m_osimstr(""), m_motstr(""), m_stostr(""), m_scastr(""), m_mot(false), m_sca(false), m_sto(false), m_zeroed(false), m_swap(true) {
-        cppgl::Context::show_gui=true;
-        //m_paramsarams init
+TwinViewer::TwinViewer(int argc, char *argv[]) : m_frame(0), m_prevFrame(0), m_record(false), m_recordframe(0), m_autoplay(false), m_syncplay(false), m_virtTime(0.0), m_maxFramerate(-1), m_frameadv(60), m_minFrame(std::numeric_limits<int>::max()), m_maxFrame(-1), m_dataset(DatasetType::NONE), m_osimstr(""), m_motstr(""), m_stostr(""), m_scastr(""), m_mot(false), m_sca(false), m_sto(false), m_zeroed(false), m_swap(true), m_write_poses(false), m_last_lr(0.f)
+{
+    cppgl::Context::show_gui = true;
+    // m_paramsarams init
         parseCmd(argc, argv);
         // interaction init
         m_interact = twin::Interaction();
@@ -459,6 +460,22 @@ TWIN_NAMESPACE_BEGIN
                 } else {
                     consHand.Render();
                 }
+
+            if (m_write_poses && opti->m_optim && !opti->m_pause_indicator && opti->m_current_learning_rate == 0 && m_last_lr > opti->m_current_learning_rate)
+            {
+                std::ostringstream oss;
+                oss << opti->name << "_pose_" << std::setw(5) << std::setfill('0') << m_frame << ".txt";
+                std::filesystem::path outfile_name = std::filesystem::path(m_params.outDir) / oss.str();
+                std::ofstream outfile(outfile_name);
+                netzP->Serialize(outfile);
+                m_frame += 1;
+                refreshFrame();
+                if (m_frame >= m_minFrame - 1)
+                {
+                    m_write_poses = false;
+                }
+            }
+            m_last_lr = opti->m_current_learning_rate;
             }
 #endif
             fbo->unbind();
